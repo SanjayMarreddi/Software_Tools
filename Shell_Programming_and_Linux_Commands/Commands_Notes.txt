@@ -1,0 +1,345 @@
+Basic Commands :
+
+logout
+cd 
+mkdir
+pwd
+man
+echo
+python3
+exit
+touch   -> Overwrites file if it exists , else creates a new file with the name provided.
+cat     -> Shows the contents of the file by CONCATENATING to the terminal screen.
+
+--> Command Src Dest
+cp -r 
+mv
+
+Text Editors :
+nano
+pico
+vim
+
+ls -a -l -r -R
+R for recursively showing.
+a shows all files including hidden ones(those with .)
+-l shows permissions for Regular use, Group, Public in order each having 3 bits, rwx -> read, write, execute
+ls -Ra shows all files recursively.
+
+rmdir
+rm -r -f
+rm -rf DIRECTORYNAME/File Name  -> Removes the file/directory provided along with all its contents recursively.
+rm SOME_PART_OF_FILE_NAME* --> Removes all the files with the matching prefix names.
+This trick  of using * with prefixes is applicable to many commands too.
+
+chmod    ->  File Permissions ( chmod 711 FILENAME --> each digit corresponds to the type of users, in each digit convert to binary which represents rwx)
+
+jobs     ->  Tasks running in background.
+Jobs can be revisited using `%Number` assigned to it.
+We can even kill the task/process as `kill %Number`.
+
+who or w -> All the connected users list.
+finger   -> To get info of the user
+./a.out
+
+
+scp ( COPY over SSH )
+
+- To copy files from server to laptop :
+
+scp 1904119@cs102:FILE_TO_COPY DESTINATION_LOCATION_ON_NORMAL_LAPTOP
+
+- To copy files to server from laptop :
+
+scp SRC_PATH_OF_FILE_TO_BE_COPIED 1904119@cs102:DESTINATION_DIRECTORY_PATH
+
+Notice the `:` in both the above commands.
+Also, since the SERVER has no idea about the Laptop, both the commands are to be done using the NORMAL COMMAND PROMPT. i.e. after logout from server.
+
+vim, vi -> Just different improved versions.
+wc -l -w -c   -> Word count, either stdin or input file.
+
+ps aux -> All ongoing processes in entire server
+ps x -> to see the processes running only in my shell.
+ps -a -> Shows background processes.
+ps aux | less -> shows compact version.
+
+less
+more
+
+sleep
+&
+sleep 10& -> process runs in the background if we use `&`.
+
+|       -> Pipe, Its useful to connect std inputs & std outputs of different processes.
+>       -> Overwrites, also used for redirection.
+>>	-> Appends
+*       -> All
+
+Ex :
+
+ps aux > output_file and ps aux >> output_file_2
+ls -l | wc - l   --> Gives the number of files in current directory.
+---------------------------------------------------------------------------------
+
+Bash (bash) is one of many available (yet the most commonly used) Unix shells. 
+Bash stands for "Bourne Again SHell", and is a replacement/improvement of the original Bourne shell (sh).
+Shell scripting is scripting in any shell, whereas Bash scripting is scripting specifically for Bash.
+In practice, however, "shell script" and "bash script" are often used interchangeably, unless the shell in question is not Bash.
+
+Each Program has 3 standard streams:
+0 STDIN
+1 STDOUT
+2 STDERR
+
+1> is equivalent to >. It always takes/redirects 1 (STDOUT) by default.
+
+./file.py > output_file              --> Here output_file stores the OUTPUT only. It prints the STDERR if any to the terminal.
+
+./file.py > output_file 2> err_file  --> Here we are storing error also into a separate file. So, It wont print to screen if error occurs.
+
+./file.py > output_file 2>&1         --> Here  both error & output goes to same file.
+
+./file.py 2>&1 | wc -l               --> Here since we knew Pipe takes the contents from the STDOUT stream & error is also directed to STDOUT, wc counts lines in both. 
+
+/dev/null                            --> File whose size is always 0. No matter whatever we redirect/write to it.
+
+2>&1 standard error is redirected to standard output
+1>&2 standard output is rediected to standard error
+
+-----------------------------------------------------------------------------------
+top -> Shows processes inorder of usage
+kill -> Kills progarms using Process_Id
+kill -9 Process_Id : To kill it definitely
+kill -9 -1 : To kill all processes at once.
+ 
+head   -> Prints the beginning lines (amount specified)
+tail   -> Ending lines
+
+file 
+history
+
+free -h  -> Shows available Physical Memory in Human Readable form.
+
+VIM Commands :
+Start with I, make changes, type ESC, then use below commands.
+:wq -> Save & exit. w stands for write, q stands for quit
+:q! -> Exit with out saving
+
+
+Python Programming :
+
+#!/usr/bin/python3
+
+
+Shell Programming :
+
+#!/bin/bash
+
+
+$1, $2 are for taking arguments while running.
+$* to take all arguments once.
+
+
+Note that after making a file, we need to give permissions(chmod +x filename) to execute it ( ./filename )
+
+
+Misc:
+- To see all environment variables, type `set`
+- Use Tab to auto complete.
+- Use `cd` to go the home directory from any place. `cd..` to go back one level of directory.
+- `.` represents the current directory.
+- Use `man COMMANDNAME` to get complete details.
+- use `COMMANDNAME --help` to get summary of options.
+- Use `sudo` to get some extra permissions.
+- We can change the terminal prompt by using PS1='some_name'
+- To search inside the Man Pages, use `/WORDS_TO_BE_SEARCHED`, use `n` to go to next matched word.  Use `SPACE` to go to next line in MAN Pages.
+
+-----------------------------------------------------------------------------
+
+- File extensions are dynamic in Unix. No compulsion unlike Windows.
+- du, du -h   -> Disk space usage by files.
+- df          -> Entire Filesystem Disk Space Usage
+
+---------------------------------
+TAR: Tape archive -> Packing Multiple files into a single file
+
+Create Verbose Files  ( cvf )
+Extract Verbose Files ( xvf )
+
+tar cvf FILENAME.tar SOURCE_DIRECTORY   -> Tarring the files.
+tar xvf FILENAME.tar -C DEST_DIRECTORY     -> Untarring the files to specific directory
+tar xvf FILENAME.tar   -> To untar into the current directory only.
+
+Compression Algos :
+
+1)
+ gzip  -> Takes a tar file
+ gunzip (.gz)  -> Takes a .tar.gz file & converts to .tar
+
+ To zip & tar at a single shot : 
+
+tar zcvf name.tar.gz SOURCE_DIRECTORY 
+tar zxvf name.tar.gz
+
+2) 
+	
+bzip2, bunzip2 (.bz2)
+
+To zip & tar at a single shot 
+
+tar jcvf name.tar.bz2 SOURCE_DIRECTORY 
+tar jxvf name.tar.bz2
+
+3) 
+
+xz, unxz  (.xz)
+
+To zip & tar at a single shot :
+
+tar Jcvf name.tar.xz SOURCE_DIRECTORY
+tar Jxvf name.tar.xz
+
+
+Notes :
+In Archiving, No reduction in size. (tar)
+In Compressions, Size is reduced  (gzip, bzip2, xz)
+
+In General, In windows, Zipping involves both Archiving & Compressing.
+
+----------------------------------------------------------------------
+
+Errors in Quiz 1:
+
+1. The configuration files for the linux system are in the directory: /etc
+2. It Changes to the parent's parent directory ->  cd ../..
+3. Which directory contains the program ls?    -> /bin
+4. echo "hello" 1>&2      -> prints `hello` on the standard error
+5. What is the regular expression for a word containing at least two a's?  .*a.*a.*  
+[ .*aa.* is not correct becoz between two a's there can be any number of characters too.]
+-----------------------------------------------------------------------
+!Character  -> Executes the last command that starts with Character.
+
+VIM Commands:
+
+These sed commands work in editors like vim also. Examples-   
+
+`:1,10d` -> To delete 1-10 lines. 
+`:/^$/d` -> To delete blank lines in the file.
+
+All the below commands are in Normal Mode. To make changes to the file, We need to press `i` & start editing.
+u -> Undo
+dd -> Deletes the current line
+yy -> Copies the current line
+p following `yy` to paste
+gg -> Cursor goes to first line
+G  -> Cursor goes to last line
+e  -> To move to next word. 
+
+Press `v` -> Visual Mode -> The select the lines manually -> press `d` for deletion.
+							  -> press `y` for Copying (Yanking) -> Then go to some place & press `p` for pasting.
+							
+
+ls -l | sed '/^d/d'     -> Delete the directories in output.
+When address is a pattern, we need to use /PATTERN/, But when address is a number we need not.  
+
+------------------------------------------------------------------------
+SED Commands:
+
+1. Deleting all directories from ls -l
+
+ls -l | sed '/^d/d'
+
+2. Deleting all blank lines from a file
+
+cat my_file| sed '/^$/d'
+
+Note:
+All the sed commands can be used in this format too : sed 'COMMAND' FILENAME
+Ex: sed '/^$/d' my_file
+
+3. Print all ip addresses starting with 103. in the output of 'w'
+
+w | sed -n '/103\./p'
+
+------------------------------------------------------------------------
+
+4. Replace the occurences of `A` with `a` in the given file.
+
+cat my_file | sed 's/A/a/3'     -> Third occurence of `A` in all the lines is replaced.
+ 
+
+cat my_file | sed 's/A/a/g'     -> All `A`s in all the lines are  replaced.
+
+Vim equivalent for this command is `:1,$s/A/a/g`
+
+which is also equivalent to        `:%s/A/a/g`
+
+To ask for confirmation too, We need to keep gc instead of g.
+
+
+
+cat my_file | sed '1,5s/A/a/g'  -> All A's in the 1-5 lines are replaced.
+
+------------------------------------------------------------------------
+
+5. Replace python with java in vim (with confirmation)
+
+1,$s/python/java/gc
+
+6. Substitute the matched lines with pattern 'A*' using & to `Here is line` and print the contents.
+   Note that `&` here represents the match with the pattern. 
+
+cat my_file | sed -n 's/A*/Here\ is\ &/p'
+
+
+7. Add .bak suffix to output of ls
+
+ls | sed -n 's/.*/&.bak/p'
+
+8. Add the prefix 'number' to all the numbers occuring in the file
+
+cat my_file | sed 's/[0-9][0-9]*/number\ &/g'
+
+9. Interchange the Time from Minutes to Hours and viceversa in the output of `w` & print it.
+
+w | sed -n 's/ \( [0-9][0-9]  \):\( [0-9][0-9] \) /\2 : \1 /p'
+
+
+Note:
+In these commands, if address is not specified, In the Vim, by default it means Current Line, Whereas In the Bash, It means all lines.
+So, For the vim commands to take all the lines, We need to use '1,$' as prefix or '%'
+
+------------------------------------------------------------------------------
+AWK:
+
+When Writing programs into file & using it as `awk -f awk_commands input_file`, 
+There is no need to keep commands as '{ print $1 }', We can put them as { print $1 }, i.e. '' are not required.
+
+But when executing the program from command line, we need to specify. Ex: awk '{ print $ 1}' input_file
+
+When printing strings inside print, use " "
+
+$0 -> Means the entire current line.  '{ print }' is equivalent to '{ print $0 }'.  Moreover even if no action is specifed the matched lines with pattern comes to std output.	
+$1 -> First word in the current line 
+
+To print side by side: { print "Some string", some_variable_declared } 
+
+To specify that ',' is my field separator:  awk -F, '{ print $1 }' input_file 
+
+We can use { print "%10s" $1 }   -> To write the field 1 in 10 spaces width.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
