@@ -328,18 +328,3 @@ To print side by side: { print "Some string", some_variable_declared }
 To specify that ',' is my field separator:  awk -F, '{ print $1 }' input_file 
 
 We can use { print "%10s" $1 }   -> To write the field 1 in 10 spaces width.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
